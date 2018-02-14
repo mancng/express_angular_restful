@@ -5,8 +5,9 @@ var app = express();
 //Get body-parser
 var bodyParser = require( 'body-parser' );
 
-//Configure bodyParser to read JSON
+//Other server configs
 app.use(bodyParser.json());
+app.use(express.static( __dirname + '/angularApp/dist'));
 
 //Mongoose/MongoDB
 var mongoose = require('mongoose');
@@ -21,6 +22,10 @@ var Task = mongoose.model('Task');
 mongoose.Promise = global.Promise;
 
 //Routes
+app.get('/', function(req, res){
+    res.json({message: "Welcome to MEAN"});
+});
+
 //Retrieve all Tasks
 app.get('/tasks', function(req, res){
     Task.find({}, function(err, task){
